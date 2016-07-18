@@ -29,7 +29,7 @@ class GameState:
             choice = raw_input("> ")
             
             if choice == "1":
-                self.inventory.add("sheets")
+                self.inventory.append("sheets")
                 self.bed_state = 1
             if choice == "2":
                 self.print_inventory()
@@ -50,7 +50,7 @@ class GameState:
             choice = raw_input("> ")
             
             if choice == "1":
-                self.inventory.add("soap bar")
+                self.inventory.append("soap bar")
                 self.basin_state = 1
             if choice == "2":
                 self.print_inventory()
@@ -73,7 +73,7 @@ class GameState:
             
             if choice == "1":
                 self.inventory.remove("sheets")
-                self.inventory.add("dirty sheets")
+                self.inventory.append("dirty sheets")
                 print "The sheets are now dirty, and hard to see."
             if choice == "2":
                 self.print_inventory()
@@ -143,7 +143,7 @@ class GameState:
             choice = raw_input("> ")
             
             if choice == "1":
-                inventory.add("key")
+                inventory.append("key")
             elif choice == "2":
                 self.print_inventory()
             else:
