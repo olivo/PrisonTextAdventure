@@ -95,6 +95,25 @@ class GameState:
     def inspect_other_prisoners(self):
         if self.other_prisoners_state == 0:
             print "There are two prisoners fighting."
+            
+            if "soap bar" in self.inventory:
+                print "What whould you like to do?"
+                print "1. Throw soap bar to the adjacent cell."
+                print "2. See inventory."
+                print "3. Go back to cell."
+                
+                choice = raw_input("> ")
+
+                if choice == "1":
+                    print "The soap bar lands near the fighting prisoners."
+                    print "One of the prisoners slips on the soap bar."
+                    print "The other prisoner starts to overpower him."
+                    self.other_prisoners_state = 1
+                elif choice == "2":
+                    self.print_inventory()
+                elif choice != "3":
+                    print "Unrecognized choice."
+            
         else:
             print "One of the prisoners choked the other one to death."
 
@@ -143,7 +162,7 @@ class GameState:
             choice = raw_input("> ")
             
             if choice == "1":
-                inventory.append("key")
+                self.inventory.append("key")
             elif choice == "2":
                 self.print_inventory()
             else:
