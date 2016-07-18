@@ -34,7 +34,7 @@ class GameState:
             if choice == "2":
                 self.print_inventory()
             elif choice != "3":
-                print "Unreconized choice."
+                print "Unrecognized choice."
                 self.inspect_bed()
         else:
             print "You have an empty bed."
@@ -52,10 +52,10 @@ class GameState:
             if choice == "1":
                 self.inventory.append("soap bar")
                 self.basin_state = 1
-            if choice == "2":
+            elif choice == "2":
                 self.print_inventory()
             elif choice != "3":
-                print "Unreconized choice."
+                print "Unrecognized choice."
                 self.inspect_basin()
         else:
             print "The basin is empty."
@@ -78,7 +78,7 @@ class GameState:
             if choice == "2":
                 self.print_inventory()
             elif choice != "3":
-                print "Unreconized choice."
+                print "Unrecognized choice."
                 self.inspect_toilet()
         else:
             print "1. See inventory."
@@ -89,7 +89,7 @@ class GameState:
             if choice == "1":
                 self.print_inventory()
             elif choice != "2":
-                print "Unreconized choice."
+                print "Unrecognized choice."
                 self.inspect_toilet()
 
     def inspect_other_prisoners(self):
