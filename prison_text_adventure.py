@@ -75,7 +75,7 @@ class GameState:
                 self.inventory.remove("sheets")
                 self.inventory.append("dirty sheets")
                 print "The sheets are now dirty, and hard to see."
-            if choice == "2":
+            elif choice == "2":
                 self.print_inventory()
             elif choice != "3":
                 print "Unrecognized choice."
