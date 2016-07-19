@@ -20,7 +20,7 @@ class GameState:
 
     def inspect_bed(self):
         if self.bed_state == 0:
-            print "You have a bed with some sheets."
+            print "\nYou have a bed with some sheets.\n"
             print "What would you like to do?"
             print "1. Take sheets."
             print "2. See inventory."
@@ -37,11 +37,11 @@ class GameState:
                 print "Unrecognized choice."
                 self.inspect_bed()
         else:
-            print "You have an empty bed."
+            print "\nYou have an empty bed.\n"
 
     def inspect_basin(self):
         if self.basin_state == 0:
-            print "There is a soap bar in the basin."
+            print "\nThere is a soap bar in the basin.\n"
             print "What would you like to do?"
             print "1. Take soap bar."
             print "2. See inventory."
@@ -58,10 +58,10 @@ class GameState:
                 print "Unrecognized choice."
                 self.inspect_basin()
         else:
-            print "The basin is empty."
+            print "\nThe basin is empty.\n"
 
     def inspect_toilet(self):
-        print "The toilet is dirty."
+        print "\nThe toilet is dirty.\n"
         print "What would you like to do?"
         
         if "sheets" in self.inventory:
@@ -74,7 +74,7 @@ class GameState:
             if choice == "1":
                 self.inventory.remove("sheets")
                 self.inventory.append("dirty sheets")
-                print "The sheets are now dirty, and hard to see."
+                print "\nThe sheets are now dirty, and hard to see.\n"
             elif choice == "2":
                 self.print_inventory()
             elif choice != "3":
@@ -94,7 +94,7 @@ class GameState:
 
     def inspect_other_prisoners(self):
         if self.other_prisoners_state == 0:
-            print "There are two prisoners fighting."
+            print "\nThere are two prisoners fighting.\n"
             
             if "soap bar" in self.inventory:
                 print "What whould you like to do?"
@@ -105,9 +105,9 @@ class GameState:
                 choice = raw_input("> ")
 
                 if choice == "1":
-                    print "The soap bar lands near the fighting prisoners."
+                    print "\nThe soap bar lands near the fighting prisoners."
                     print "One of the prisoners slips on the soap bar."
-                    print "The other prisoner starts to overpower him."
+                    print "The other prisoner starts to overpower him.\n"
                     self.other_prisoners_state = 1
                 elif choice == "2":
                     self.print_inventory()
@@ -115,12 +115,12 @@ class GameState:
                     print "Unrecognized choice."
             
         else:
-            print "One of the prisoners choked the other one to death."
+            print "\nOne of the prisoners choked the other one to death.\n"
 
     def inspect_other_basin(self):
 
         if self.other_basin_state == 0:
-            print "There is a basin in the other cell with a conspicuous handle."
+            print "\nThere is a basin in the other cell with a conspicuous handle.\n"
             if "sheets" in self.inventory or "dirty sheets" in self.inventory:
                 print "What do you want to do?"
                 print "1. Throw one extreme of the sheets against the basin in the adjacent cell?"
@@ -130,8 +130,8 @@ class GameState:
                 choice = raw_input("> ")
                 
                 if choice == "1":
-                    print "The other side of the sheets becomes locked on the basin."
-                    print "As you tigthen the sheets on your side, you form a rope trap at the entrance of the other cell."
+                    print "\nThe other side of the sheets becomes locked on the basin."
+                    print "As you tigthen the sheets on your side, you form a rope trap at the entrance of the other cell.\n"
                     if "sheets" in self.inventory:
                         self.inventory.remove("sheets")
                         self.other_basin_state = 1
@@ -144,15 +144,15 @@ class GameState:
                     print "Unrecognized choice"
                     self.inspect_other_basin()
         elif self.other_basin_state == 1:
-            print "There is a tight sheet forming a rope trap at the entrance of the other cell."
+            print "\nThere is a tight sheet forming a rope trap at the entrance of the other cell.\n"
         elif self.other_basin_state == 2:
-            print "There is a tight dark sheet forming a rope trap at the entrance of the other cell."
+            print "\nThere is a tight dark sheet forming a rope trap at the entrance of the other cell.\n"
 
     def inspect_key(self):
         if "key" in self.inventory:
-            print "You have the key in your pocket."
+            print "\nYou have the key in your pocket.\n"
         elif self.key_state == 0:
-            print "The guard outside the cell has the key to your cell."
+            print "\nThe guard outside the cell has the key to your cell.\n"
         else:
             print "The key is in the floor of your cell."
             print "What would you like to do?"
@@ -170,35 +170,35 @@ class GameState:
                 self.inspect_key()
 
     def scream(self):
-        print "You scream 'FIRE!!!' like crazy"
-        print "The guard looks around your cell and the adjacent cell."
+        print "\nYou scream 'FIRE!!!' like crazy"
+        print "The guard looks around your cell and the adjacent cell.\n"
 
         if self.other_prisoners_state == 0:
 
             print "The guard doesn't mind the other prisoners fighting."
-            print "The guard tells you to shut up."
+            print "The guard tells you to shut up.\n"
         else:
             print "The guard notices one of the prisoners is lying on the floor in the adjacent cell."
-            print "The guard approaches the adjacent cell."
+            print "The guard approaches the adjacent cell.\n"
 # Finish handling of adjacent basin state.
             if self.other_basin_state == 0:
                 print "The guard sends one of the prisioners to detainment, and the other to the hospital."
-                print "The guard has some other guards bring two new prisioners to the adjacent cell."
+                print "The guard has some other guards bring two new prisioners to the adjacent cell.\n"
             elif self.other_basin_state == 1:
-                print "The guard notices something suspicious in the entrance: your rope tra."
+                print "The guard notices something suspicious in the entrance: your rope trap."
                 print "Before he gets too close to the gate, you manage to disassembe the trap."
-                print "You put the sheets back in the bed."
+                print "You put the sheets back in the bed.\n"
                 self.bed_state = 0
                 print "The guard sends one of the prisioners to detainment, and the other to the hospital."
-                print "The guard has some other guards bring two new prisioners to the adjacent cell."
+                print "The guard has some other guards bring two new prisioners to the adjacent cell.\n"
             else:
                 print "The guard enters the adjacent cell."
-                print "The guard trips on the trap, lies unconscious on the floor, and drops a key in your cell."
+                print "The guard trips on the trap, lies unconscious on the floor, and drops a key in your cell.\n"
                 self.key_state = 1
 
     def inspect_gate(self):
         if "key" in self.inventory:
-            print "The gate is locked."
+            print "\nThe gate is locked.\n"
             print "What would you like to do?"
             
             print "1. Use key."
@@ -208,7 +208,7 @@ class GameState:
             choice = raw_input("> ")
 
             if choice == "1":
-                print "You unlock the cell!"
+                print "\nYou unlock the cell!\n"
                 print "===== YOU HAVE ESCAPED!!! ===="
                 self.solved = True
             elif choice == "2":
@@ -221,7 +221,7 @@ class GameState:
 
     def select_cell_choice(self):
 
-        print "You are in a cell."
+        print "\nYou are in a cell.\n"
         print "What would you like to do?"
 
         print "1. Inspect bed."
@@ -254,8 +254,6 @@ class GameState:
         else:
             print "Unrecognized choice."
 
-
-print "You are in a prison cell."
 
 game_state = GameState()
 
