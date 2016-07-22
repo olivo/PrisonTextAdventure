@@ -232,6 +232,7 @@ class GameState:
         print "6. Inspect key."
         print "7. Scream 'FIRE!!!'"
         print "8. Inspect cell gate."
+        print "9. See inventory."
         
         choice = raw_input("> ")
 
@@ -251,6 +252,8 @@ class GameState:
             self.scream()
         elif choice == "8":
             self.inspect_gate()
+        elif choice == "9":
+            self.print_inventory()
         else:
             print "Unrecognized choice."
 
