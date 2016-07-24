@@ -7,6 +7,7 @@ class GameState:
         self.basin_state = 0
         self.other_prisoners_state = 0
         self.other_basin_state = 0
+        self.corner_floor_state = 0
         self.key_state = 0
 
     def print_inventory(self):
@@ -42,10 +43,13 @@ class GameState:
     def inspect_basin(self):
         if self.basin_state == 0:
             print "\nThere is a soap bar in the basin.\n"
+            print "\nThere is a water cup in the basin.\n"
+
             print "What would you like to do?"
             print "1. Take soap bar."
-            print "2. See inventory."
-            print "3. Go back to cell."
+            print "2. Take water cup."
+            print "3. See inventory."
+            print "4. Go back to cell."
 
             choice = raw_input("> ")
             
@@ -53,12 +57,85 @@ class GameState:
                 self.inventory.append("soap bar")
                 self.basin_state = 1
             elif choice == "2":
+                self.inventory.append("water cup")
+                self.basin_state = 2
+            elif choice == "3":
+                self.print_inventory()
+            elif choice != "4":
+                print "Unrecognized choice."
+                self.inspect_basin()
+
+        elif self.basin_state == 1:
+            print "\nThere is a water cup in the basin.\n"
+
+            print "What would you like to do?"
+            print "1. Take water cup."
+            print "2. See inventory."
+            print "3. Go back to cell."
+
+            choice = raw_input("> ")
+            
+            if choice == "1":
+                self.inventory.append("water cup")
+                self.basin_state = 3
+            elif choice == "2":
                 self.print_inventory()
             elif choice != "3":
                 print "Unrecognized choice."
                 self.inspect_basin()
-        else:
-            print "\nThe basin is empty.\n"
+
+        elif self.basin_state == 2:
+
+            print "\nThere is a soap bar in the basin.\n"
+
+            print "What would you like to do?"
+            print "1. Take soap."
+            print "2. Fill water cup with water."
+            print "3. See inventory."
+            print "4. Go back to cell."
+
+            choice = raw_input("> ")
+
+            if choice == "1":
+                self.inventory.append("soap")
+                self.basin_state = 3
+            elif choice == "2":
+                if "filled water cup" in self.inventory:
+                    print "Your water cup is already completely full."
+                    return None
+                else:
+                    self.inventory.remove("water cup")
+                    self.inventory.append("filled water cup")
+                    self.basin_state = 2
+            elif choice == "3":
+                self.print_inventory()
+            elif choice != "4":
+                print "Unrecognized choice."
+                self.inspect_basin()
+
+        elif self.basin_state == 3:
+
+            print "What would you like to do?"
+            print "1. Fill water cup with water."
+            print "2. See inventory."
+            print "3. Go back to cell."
+
+            choice = raw_input("> ")
+
+            if choice == "1":
+                if "filled water cup" in self.inventory:
+                    print "Your water cup is already completely full."
+                    return None
+                else:
+                    self.inventory.remove("water cup")
+                    self.inventory.append("filled water cup")
+                    self.basin_state = 2
+            elif choice == "2":
+                self.print_inventory()
+            elif choice != "3":
+                print "Unrecognized choice."
+                self.inspect_basin()
+
 
     def inspect_toilet(self):
         print "\nThe toilet is dirty.\n"
@@ -263,3 +340,19 @@ cell_game_state = GameState()
 while not cell_game_state.solved:
     cell_game_state.select_cell_choice()
     
+
+# Hallway scene.
+# Need to get from the hallway to outside.
+# You're in prisoners clothing.
+# There are armed guards
+# There are emergency medical services.
+# You should disguise yourself to escape.
+# You should knock someone out to make emergency services leave the room.
+
+## You should stall one of the guys before he gets into the room so that
+## it allows you enough time to get the coat and escape.
+
+# You should find a way to distract the guards and emergency crew to be allowed
+# to escape.
+
+# You should open up the door to the outside. 
