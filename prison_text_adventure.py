@@ -7,7 +7,7 @@ class GameState:
         self.basin_state = 0
         self.other_prisoners_state = 0
         self.other_basin_state = 0
-        self.corner_floor_state = 0
+        self.cell_corner_floor_state = 0
         self.key_state = 0
 
     def print_inventory(self):
@@ -137,37 +137,93 @@ class GameState:
                 self.inspect_basin()
 
 
-    def inspect_toilet(self):
-        print "\nThe toilet is dirty.\n"
-        print "What would you like to do?"
+        self.cell_corner_floor_state = 0
+
+    def inspect_cell_corner_floor(self):
         
-        if "sheets" in self.inventory:
-            print "1. Drench sheets in toilet."
-            print "2. See inventory."
-            print "3. Go back to cell."
+        if self.cell_corner_floor_state == 0:
+            print "\nThe concrete in the floor seems freshly laid out.\n"
 
-            choice = raw_input("> ")
+            print "What would you like to do?\n"
             
-            if choice == "1":
-                self.inventory.remove("sheets")
-                self.inventory.append("dirty sheets")
-                print "\nThe sheets are now dirty, and hard to see.\n"
-            elif choice == "2":
-                self.print_inventory()
-            elif choice != "3":
-                print "Unrecognized choice."
-                self.inspect_toilet()
+            if "filled water cup" in self.inventory:
+                print "1. Use water to loosen up concrete."
+                print "2. See inventory."
+                print "3. Go back to cell."
+
+                choice = raw_input("> ")
+            
+                if choice == "1":
+                    self.inventory.remove("filled water cup")
+                    self.cell_corner_floor_state = 1
+                    self.inspect_cell_corner_floor()
+                    
+                elif choice == "2":
+                    self.print_inventory()
+                    self.inspect_cell_corner_floor()
+                elif choice != "3":
+                    print "Unrecognized choice."
+                    self.inspect_cell_corner_floor()
+            else:
+                print "1. See inventory."
+                print "2. Go back to cell."
+
+                choice = raw_input("> ")
+            
+                if choice == "1":
+                    self.print_inventory()
+                    self.inspect_cell_corner_floor()
+                elif choice != "2":
+                    print "Unrecognized choice."
+                    self.inspect_cell_corner_floor()
         else:
-            print "1. See inventory."
-            print "2. Go back to cell."
-
-            choice = raw_input("> ")
+            print "\nThere is a pond of concrete-looking water on the floor.\n"
             
-            if choice == "1":
-                self.print_inventory()
-            elif choice != "2":
-                print "Unrecognized choice."
-                self.inspect_toilet()
+            if "sheets" in self.inventory:
+
+                print "What would you like to do?\n"
+            
+                print "1. Drench sheets in concrete-looking water on the floor."
+                print "2. See inventory."
+                print "3. Go back to cell."
+
+                choice = raw_input("> ")
+            
+                if choice == "1":
+                    self.inventory.remove("sheets")
+                    self.inventory.append("concrete-looking sheets")
+                    self.inspect_cell_corner_floor()
+                    
+                elif choice == "2":
+                    self.print_inventory()
+                    self.inspect_cell_corner_floor()
+                elif choice != "3":
+                    print "Unrecognized choice."
+                    self.inspect_cell_corner_floor()
+                else:
+                    print "1. See inventory."
+                    print "2. Go back to cell."
+
+                    choice = raw_input("> ")
+            
+                    if choice == "1":
+                        self.print_inventory()
+                        self.inspect_cell_corner_floor()
+                    elif choice != "2":
+                        print "Unrecognized choice."
+                        self.inspect_cell_corner_floor()
+                
+            else:
+                print "1. See inventory."
+                print "2. Go back to cell."
+
+                choice = raw_input("> ")
+            
+                if choice == "1":
+                    self.print_inventory()
+                elif choice != "2":
+                    print "Unrecognized choice."
+                    self.inspect_cell_corner_floor()
 
     def inspect_other_prisoners(self):
         if self.other_prisoners_state == 0:
@@ -198,9 +254,9 @@ class GameState:
 
         if self.other_basin_state == 0:
             print "\nThere is a basin in the other cell with a conspicuous handle.\n"
-            if "sheets" in self.inventory or "dirty sheets" in self.inventory:
+            if "sheets" in self.inventory or "concrete-looking sheets" in self.inventory:
                 print "What do you want to do?"
-                print "1. Throw one extreme of the sheets against the basin in the adjacent cell?"
+                print "1. Throw one extreme of the sheets against the basin in the adjacent cell"
                 print "2. See inventory."
                 print "3. Go back to cell."
                 
@@ -213,7 +269,7 @@ class GameState:
                         self.inventory.remove("sheets")
                         self.other_basin_state = 1
                     else:
-                        self.inventory.remove("dirty sheets")
+                        self.inventory.remove("concrete-looking sheets")
                         self.other_basin_state = 2
                 elif choice == "2":
                     self.print_inventory()
@@ -223,7 +279,7 @@ class GameState:
         elif self.other_basin_state == 1:
             print "\nThere is a tight sheet forming a rope trap at the entrance of the other cell.\n"
         elif self.other_basin_state == 2:
-            print "\nThere is a tight dark sheet forming a rope trap at the entrance of the other cell.\n"
+            print "\nThere is a camouflaged sheet forming a rope trap at the entrance of the other cell.\n"
 
     def inspect_key(self):
         if "key" in self.inventory:
@@ -264,13 +320,13 @@ class GameState:
             elif self.other_basin_state == 1:
                 print "The guard notices something suspicious in the entrance: your rope trap."
                 print "Before he gets too close to the gate, you manage to disassembe the trap."
-                print "You put the sheets back in the bed.\n"
+                print "You put the sheets back in the bed on the non-camouflaged side.\n"
                 self.bed_state = 0
                 print "The guard sends one of the prisioners to detainment, and the other to the hospital."
                 print "The guard has some other guards bring two new prisioners to the adjacent cell.\n"
             else:
                 print "The guard enters the adjacent cell."
-                print "The guard trips on the trap, lies unconscious on the floor, and drops a key in your cell.\n"
+                print "You pull the sheets, the guard trips on the trap, lies unconscious on the floor, and drops a key in your cell.\n"
                 self.key_state = 1
 
     def inspect_gate(self):
@@ -303,7 +359,7 @@ class GameState:
 
         print "1. Inspect bed."
         print "2. Inspect basin."
-        print "3. Inspect toilet."
+        print "3. Inspect cell corner floor."
         print "4. Inspect prisoners in adjacent cell"
         print "5. Inspect basin in adjacent cell."
         print "6. Inspect key."
@@ -318,7 +374,7 @@ class GameState:
         elif choice == "2":
             self.inspect_basin()
         elif choice == "3":
-            self.inspect_toilet()
+            self.inspect_cell_corner_floor()
         elif choice == "4":
             self.inspect_other_prisoners()
         elif choice == "5":
