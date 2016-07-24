@@ -258,8 +258,8 @@ class GameState:
             print "Unrecognized choice."
 
 
-game_state = GameState()
+cell_game_state = GameState()
 
-while not game_state.solved:
-    game_state.select_cell_choice()
+while not cell_game_state.solved:
+    cell_game_state.select_cell_choice()
     
